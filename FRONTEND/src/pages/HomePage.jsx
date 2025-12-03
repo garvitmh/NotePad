@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import RateLimitedUI from "../components/RateLimitedUI";
 import toast from "react-hot-toast";
 import NoteCard from "../components/NoteCard";
-import axios from "axios";
+import api from "../utils/axios";
 
 const HomePage = () => {
   const [isRateLimited, setRateLimited] = useState(false);
@@ -12,7 +12,7 @@ const HomePage = () => {
   const fetchNotes = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:9000/api/notes");
+      const res = await api.get("/notes");
       setNotes(res.data);
       setRateLimited(false);
     } catch (error) {
@@ -37,7 +37,7 @@ const HomePage = () => {
     if (!confirmed) return;
 
     try {
-      await axios.delete(`http://localhost:9000/api/notes/${id}`);
+      await api.delete(`notes/${id}`);
       setNotes((prev) => prev.filter((note) => note._id !== id));
       toast.success("Note deleted successfully.");
     } catch (error) {
