@@ -6,6 +6,7 @@ import cors from 'cors';
 import rateLimit from "./middleware/RateLimiter.js";
 import path from "path"
 
+
 const app = express();
 dotenv.config();
 
@@ -29,7 +30,7 @@ if (process.env.NODE_ENV === "production"){
   })
 }
 
-const PORT = 9000;
+const PORT = process.env.PORT 
 ConnectDB().then(() => {
   const server = app.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`);
